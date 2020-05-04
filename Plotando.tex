@@ -1,0 +1,47 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx} % essencial
+\usepackage{tikz} % essencial 
+\usepackage{pgfplots} % essencial
+\usepackage{pgfplotstable} % essencial
+\usepackage{times} % Somente a fonte
+\usepgfplotslibrary{dateplot} % Data como eixo x
+\usepackage[left=2.00cm, right=2.00cm, top=2.00cm, bottom=2.00cm]{geometry} % margem
+\author{Eduardo Adame}
+\title{Como plotar gráficos}
+\pgfplotsset{width=.8\textwidth,compat=1.9} %tamanho
+\begin{document}
+	\begin{figure}[!h]
+		\centering %centraliza
+		\begin{tikzpicture} %inicia o ambiente tikz
+		\begin{axis}[ %inicia o eixo
+		title = COVID-19 no estado da Ceará, %titulo
+		date coordinates in=x, % data em x
+		xticklabel style={rotate=90,anchor=near xticklabel},
+		xticklabel={\day/\month}, % data no formato dia/mes
+		xlabel={Tempo}, % Descrição eixo x
+		xlabel style={yshift=-1pt},
+		ylabel=Quantidade de Casos, % Descrição eixo y
+		ymin=0, % mínimo y
+		ymax=8000,  % máximo y
+		xmin=2020-03-17, % mínimo x
+		xmax=2020-04-30, % máximo x
+		ylabel style={yshift=10pt},
+		legend style={
+		at={(0.5,-0.2)},anchor=north,legend columns=-1,
+		}, %posição das legendas
+		], %fim das propriedades dos eixos
+		\addplot table [x index=0,y index=1] {Dados Brasil/DATA-CE.dat}; %Dados na subpasta
+		\addlegendentry{Contaminados} %legenda
+		\addplot table [x index=0,y index=2] {DATA-CE.dat};%Dados no mesmo diretório
+		\addlegendentry{Óbitos}
+		\end{axis}
+		\end{tikzpicture} 
+	\end{figure}
+\end{document}
